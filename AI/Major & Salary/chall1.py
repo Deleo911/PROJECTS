@@ -1,6 +1,9 @@
 import pandas as pd
+import os
 
-df=pd.read_csv("/100DAYS/Day71/salaries_by_college_major.csv")
+csv_path = os.path.join(os.path.dirname(__file__), "salaries_by_college_major.csv")
+df = pd.read_csv(csv_path)
+
 cleandf=df.dropna()
 
 # What college major has the highest mid career salary?
@@ -13,7 +16,7 @@ print(f"The graduate earn {ans2}")
 
 # Which college major has the lowest starting salary and how much do graduates earn after university?
 n2=cleandf['Starting Median Salary'].idxmin()
-ans3=cleandf['Undergraduate Minor'].loc[n2]
+ans3=cleandf['Undergraduate Major'].loc[n2]
 print(f"The college with the lowest starting salary is {ans3}")
 ans4=cleandf['Mid-Career 10th Percentile Salary'][n2]+cleandf['Mid-Career 90th Percentile Salary'][n2] 
 print(f"Graduate at the end of university end {ans4}")

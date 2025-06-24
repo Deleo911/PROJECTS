@@ -1,9 +1,11 @@
 from email.headerregistry import Group
 from tokenize import group
 import pandas as pd
+import os
 
 # To collect the csv file and to have access
-df=pd.read_csv("./salaries_by_college_major.csv")
+csv_path = os.path.join(os.path.dirname(__file__), "salaries_by_college_major.csv")
+df = pd.read_csv(csv_path)
 # To get first 5 rows from the csv file
 df.head()
 # To get the size or dimention of the csv file
@@ -26,7 +28,7 @@ clean_df['Starting Median Salary'].max()
 n=clean_df['Starting Median Salary'].idxmax()
 # To get the major name that has this highest Starting Median Salary
 clean_df['Undergraduate Major'].loc[n]
-clean_df['Undergraduate Minor'][n]
+clean_df['Undergraduate Major'][n]
 # To get all the row of that index
 clean_df.loc[n]
 # To add another attribute with name Spread
@@ -40,7 +42,7 @@ clean_df.groupby("Group")
 # To count the elements of each group
 clean_df.groupby("Group").count()
 # To find the mean of each group
-clean_df.groupby("Group").mean()
+clean_df.groupby("Group").mean(numeric_only=True)
 # To change format of number
 # pd.options.display.float_format = '{:,.2f}'.format
-clean_df.groupby("Group").mean()
+print(clean_df.groupby("Group").mean(numeric_only=True))
