@@ -1,0 +1,70 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}My Top 10 Movies{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="heading">My Top 10 Movies</h1>
+  <p class="description">These are my all time favourite movies.</p>
+  {% if allmovies==[] %}
+  <div class="card" >
+    <div class="front" style="background-image: url('https://www.shortlist.com/media/images/2019/05/the-30-coolest-alternative-movie-posters-ever-2-1556670563-K61a-column-width-inline.jpg');">
+        <p class="large">X</p>
+    </div>
+    <div class="back">
+      <div>
+        <div class="title">No Movies<span class="release_date">(2002)</span></div>
+        <div class="rating">
+            <label>9.99</label>
+          <i class="fas fa-star star"></i>
+        </div>
+        <p class="review">"Deleo"</p>
+        <p class="overview">
+            This is what happens when The is no movie present in the site, please be patient, sit steal and see how you can add your top 10 best movies
+        </p>
+
+        <a href="#" class="button">Update</a>
+        <a href="#" class="button delete-button">Delete</a>
+      </div>
+    </div>
+  </div>
+  {% else %}
+    {% for movieinfo in allmovies %}
+    <div class="card" >
+      <div class="front" style="background-image: url('{{movieinfo.imgurl}}')">
+          <p class="large">{{movieinfo["ranking"]}}</p>
+      </div>
+      <div class="back">
+        <div>
+          <div class="title">{{movieinfo["title"]}} <span class="release_date">({{movieinfo["year"]}})</span></div>
+          <div class="rating">
+              <label>{{movieinfo["rating"]}}</label>
+            <i class="fas fa-star star"></i>
+          </div>
+          <p class="review">"{{movieinfo["review"]}}"</p>
+          <p class="overview">
+            {{movieinfo["description"]}}
+          </p>
+  
+          <a href="{{ url_for('edit', id=movieinfo['id']) }}" class="button">Update</a>
+          <a href="{{ url_for('delete', id=movieinfo['id']) }}#" class="button delete-button">Delete</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class="container text-center add">
+<a href="{{ url_for('add') }}" class="button">Add Movie</a>
+</div>
+
+{% endblock %}
